@@ -1,12 +1,17 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Home from "./Pages/home-page/home.page";
 import Register from "./Pages/register-page/register.page";
+import { firebaseAuth } from "./configFirebase";
 export const Routes = ({ children }) => {
   return (
     <>
-      <Route path={"/"} exact render={() => <Home />} />
+      <PrivateRoute path={"/"} exact component={<Home />} />
       <Route path={"/register"} exact render={() => <Register />} />
     </>
   );
+};
+
+const PrivateRoute = ({ component, ...rest }) => {
+  return <Route {...rest} render={() => (firebaseAuth.currentUser ? component : <Redirect to={"/register"} />)} />;
 };
