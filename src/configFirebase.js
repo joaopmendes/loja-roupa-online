@@ -15,9 +15,9 @@ const firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
 
 export const firebaseAuth = firebase.auth();
 export const firebaseAuthProviders = {
-  googleProvider: new firebaseApp.auth.GoogleAuthProvider()
+  googleProvider: new firebase.auth.GoogleAuthProvider()
 };
-
+console.log(firebaseAuthProviders);
 export const FirebaseContext = React.createContext({ firebaseApp });
 export const FirebaseWrapper = ({ children }) => {
   return <FirebaseContext.Provider value={{ firebaseApp }}>{children}</FirebaseContext.Provider>;
