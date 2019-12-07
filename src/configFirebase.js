@@ -11,10 +11,14 @@ const FIREBASE_CONFIG = {
   appId: process.env.REACT_APP_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
-
 const firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
-export const FirebaseContext = React.createContext({ firebaseApp });
 
+export const firebaseAuth = firebase.auth();
+export const firebaseAuthProviders = {
+  googleProvider: new firebaseApp.auth.GoogleAuthProvider()
+};
+
+export const FirebaseContext = React.createContext({ firebaseApp });
 export const FirebaseWrapper = ({ children }) => {
   return <FirebaseContext.Provider value={{ firebaseApp }}>{children}</FirebaseContext.Provider>;
 };
