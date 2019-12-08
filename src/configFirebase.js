@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "firebase";
 
 const FIREBASE_CONFIG = {
@@ -11,14 +11,22 @@ const FIREBASE_CONFIG = {
   appId: process.env.REACT_APP_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
-const firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
-
-export const firebaseAuth = firebase.auth();
+export const firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
 export const firebaseAuthProviders = {
   googleProvider: new firebase.auth.GoogleAuthProvider()
 };
-console.log(firebaseAuthProviders);
-export const FirebaseContext = React.createContext({ firebaseApp });
-export const FirebaseWrapper = ({ children }) => {
-  return <FirebaseContext.Provider value={{ firebaseApp }}>{children}</FirebaseContext.Provider>;
+
+const AuthContext = React.createContext({});
+
+const AuthContextProvider = props => {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    firebaseApp.auth().onAuthStateChanged(userFire => {
+      if (userFire) setUser(userFire);
+      else setUser(null);
+    });
+  }, []);
+  return <AuthContext.Provider value={{ user }}>{props.children}</AuthContext.Provider>;
 };
+
+export { AuthContext, AuthContextProvider };

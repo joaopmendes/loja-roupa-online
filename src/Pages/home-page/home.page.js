@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
-import { FirebaseContext } from "../../configFirebase";
+import { AuthContext } from "../../configFirebase";
 
 const Home = () => {
-  const firebase = useContext(FirebaseContext).firebaseApp;
-  const user = firebase.auth().currentUser;
-  console.log(user);
+  const { user } = useContext(AuthContext);
   return <div>Home</div>;
 };
 
