@@ -8,8 +8,10 @@ import {
   MDBNavbarNav,
   MDBNavItem,
   MDBNavLink,
-  MDBContainer
+  MDBContainer,
+  MDBFormInline
 } from "mdbreact";
+import { FirebaseAuthUtils } from "../../utils/auth.utils";
 const NavbarComponent = () => {
   const [open, setOpen] = useState(false);
   const { user } = useContext(AuthContext);
@@ -17,7 +19,9 @@ const NavbarComponent = () => {
   let rigthNavbarItems = (
     <>
       <MDBNavItem>
-        <MDBNavLink to="/logout">Logout</MDBNavLink>
+        <MDBNavLink to={"#"} onClick={() => FirebaseAuthUtils.authLogout()}>
+          Logout
+        </MDBNavLink>
       </MDBNavItem>
       <MDBNavItem>
         <MDBNavLink to="#!">Cart</MDBNavLink>
@@ -39,25 +43,23 @@ const NavbarComponent = () => {
   }
 
   return (
-    <MDBNavbar color="indigo" dark expand="md">
+    <MDBNavbar color="rgba-black-strong" dark expand="md">
       <MDBContainer>
-        <MDBNavbarBrand>
-          <strong className="white-text">Logitech Store</strong>
-        </MDBNavbarBrand>
         <MDBNavbarToggler onClick={() => setOpen(!open)} />
         <MDBCollapse id="navbarCollapse3" isOpen={open} navbar>
-          <MDBNavbarNav left>
-            <MDBNavItem active>
-              <MDBNavLink to="#!">Home</MDBNavLink>
-            </MDBNavItem>
+          <MDBNavLink to="/">
+            <strong className="white-text">Logitech Store</strong>
+          </MDBNavLink>
+          <MDBNavbarNav right>
             <MDBNavItem>
-              <MDBNavLink to="#!">Features</MDBNavLink>
+              <MDBFormInline waves>
+                <div className="md-form my-0">
+                  <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
+                </div>
+              </MDBFormInline>
             </MDBNavItem>
-            <MDBNavItem>
-              <MDBNavLink to="#!">Pricing</MDBNavLink>
-            </MDBNavItem>
+            {rigthNavbarItems}
           </MDBNavbarNav>
-          <MDBNavbarNav right>{rigthNavbarItems}</MDBNavbarNav>
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>

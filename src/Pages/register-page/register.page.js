@@ -1,23 +1,33 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { RegisterValidations } from "./formik.validations";
 import { useHistory } from "react-router-dom";
 import { firebaseApp } from "../../configFirebase";
 import SimpleCard from "../../Components/SimpleCard/simple-card.component";
+import LoadingSpinnerComponent from "../../Components/LoadingSpinner/loading-sponner.component";
+import { FirebaseAuthUtils } from "../../utils/auth.utils";
 
 const Register = () => {
   const history = useHistory();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleRegister = values => {
+    setLoading(true);
     firebaseApp
       .auth()
       .createUserWithEmailAndPassword(values.email, values.password)
-      .then(() => {
+      .then(({ user }) => {
         history.push("/");
         setError("");
+        setLoading(false);
+        FirebaseAuthUtils.updateUserData(user, {
+          displayName: values.name
+        });
       })
       .catch(err => {
-        setError("The form is invalid");
+        setError("The form is invalid"); // TODO: better output error messages
+        setLoading(false);
       });
   };
   return (
@@ -81,14 +91,18 @@ const Register = () => {
               <div className={"col-12 clearfix"}>
                 <div className="form-group">
                   <div className={"float-right"}>
-                    <>
-                      <button type="submit" className="btn btn-primary mr-2">
-                        Register
-                      </button>
-                      <button type="reset" className="btn btn-secondary">
-                        Reset
-                      </button>
-                    </>
+                    {loading ? (
+                      <LoadingSpinnerComponent />
+                    ) : (
+                      <>
+                        <button type="submit" className="btn btn-primary mr-2">
+                          Register
+                        </button>
+                        <button type="reset" className="btn btn-secondary">
+                          Reset
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
