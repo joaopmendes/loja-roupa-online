@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../../configFirebase";
+import { AuthContext } from "../../firebase.config";
 import {
   MDBNavbar,
   MDBNavbarBrand,

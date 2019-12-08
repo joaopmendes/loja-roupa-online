@@ -1,4 +1,4 @@
-import { firebaseApp } from "../configFirebase";
+import { firebaseApp } from "../firebase.config";
 
 export class FirebaseAuthUtils {
   static authLogout() {

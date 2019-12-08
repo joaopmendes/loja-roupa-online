@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../configFirebase";
+import React, { useEffect } from "react";
+import { FirebaseDbUtils } from "../../utils/db.utils";
 
 const Home = () => {
-  const { user } = useContext(AuthContext);
+  useEffect(() => {
+    FirebaseDbUtils.getAllItemsFromDb();
+  }, []);
   return <div>Home</div>;
 };
 

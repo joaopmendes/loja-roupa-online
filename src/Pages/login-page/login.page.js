@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { LoginValidation } from "./formik.validations";
 import { useHistory } from "react-router-dom";
-import { firebaseApp, firebaseAuthProviders } from "../../configFirebase";
+import { firebaseApp, firebaseAuthProviders } from "../../firebase.config";
 import withFirebaseAuth from "react-with-firebase-auth";
 import SimpleCard from "../../Components/SimpleCard/simple-card.component";
 
